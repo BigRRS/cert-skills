@@ -24,16 +24,20 @@ cd cert-skills
 El projecte inclou un script Bash per interactuar amb el contracte.
 
 ### Executar el menú interactiu
-```bash
-./gestor_certificats.sh
+Executa el següent comandament per iniciar la gestió de certificats:
+```sh
+./AdminCertSkills.sh
 ```
 
-### Opcions disponibles
+### Funcionalitats
 1️⃣ **Emetre un nou certificat**
 2️⃣ **Consultar un certificat per ID**
 3️⃣ **Consultar certificats d'un usuari**
-4️⃣ **Consultar certificats emesos per un emissor**
-5️⃣ **Sortir**
+4️⃣ **Consultar certificats emesos per un emisor**
+5️⃣ **Revocar un certificat**
+6️⃣ **Sortir**
+
+
 
 ## 📜 Format del Certificat
 Cada certificat conté la següent informació:
@@ -62,6 +66,8 @@ mxpy contract deploy --pem wallet.pem --proxy https://devnet-gateway.multiversx.
 4. Puja la branca (`git push origin feature-nova`).
 5. Fes una Pull Request.
 
-## 📄 Llicència
-Aquest projecte està sota la llicència MIT.
+## Llicència
+Aquest projecte està sota la **Llicència MIT**, permetent la seva utilització, modificació i distribució sense restriccions.
+
+
 
