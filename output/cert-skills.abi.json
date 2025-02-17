@@ -1,0 +1,315 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.82.0",
+            "commitHash": "f6e511eec7342f59a25f7c0534f1dbea00d01b14",
+            "commitDate": "2024-10-15",
+            "channel": "Stable",
+            "short": "rustc 1.82.0 (f6e511eec 2024-10-15)"
+        },
+        "contractCrate": {
+            "name": "cert-skills",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.54.6"
+        }
+    },
+    "docs": [
+        "Contrato principal para la gestión de certificaciones de habilidades"
+    ],
+    "name": "CertSkills",
+    "constructor": {
+        "docs": [
+            "Constructor del contrato",
+            "Inicializa el contador de certificados a 0"
+        ],
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "Endpoint para emitir un nuevo certificado",
+                "",
+                "# Argumentos",
+                "* `user_address` - Dirección del usuario que recibirá el certificado",
+                "* `skill` - Tipo de habilidad a certificar",
+                "* `level` - Nivel de competencia alcanzado",
+                "",
+                "# Restricciones",
+                "* El emisor no puede certificarse a sí mismo",
+                "* Un usuario no puede tener dos certificados activos para la misma habilidad"
+            ],
+            "name": "issueCertificate",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "skill",
+                    "type": "Skill"
+                },
+                {
+                    "name": "level",
+                    "type": "Level"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "Endpoint para revocar un certificado existente",
+                "",
+                "# Argumentos",
+                "* `certificate_id` - ID del certificado a revocar",
+                "",
+                "# Restricciones",
+                "* Solo el emisor original puede revocar el certificado",
+                "* El certificado debe estar activo para poder ser revocado"
+            ],
+            "name": "revokeCertificate",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "certificate_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "Vista para obtener un certificado específico por su ID"
+            ],
+            "name": "getCertificate",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "certificate_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Certificate"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Vista para obtener todos los certificados de un usuario específico"
+            ],
+            "name": "getUserCertificates",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Certificate>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Vista para obtener los certificados activos emitidos por un emisor específico",
+                "Solo devuelve los certificados que tienen estado Active"
+            ],
+            "name": "getIssuerCertificates",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "issuer_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Certificate>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Almacena el último ID de certificado utilizado"
+            ],
+            "name": "getLastCertificateId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Mapeo de ID de certificado a estructura de Certificate"
+            ],
+            "name": "getCertificateById",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "certificate_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Certificate"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Mapeo de dirección de usuario a conjunto de IDs de certificados"
+            ],
+            "name": "getUserCertificatesIds",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "Mapeo de dirección de emisor a conjunto de IDs de certificados emitidos"
+            ],
+            "name": "getIssuerCertificatesIds",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "issuer_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        }
+    ],
+    "esdtAttributes": [],
+    "hasCallback": false,
+    "types": {
+        "Certificate": {
+            "type": "struct",
+            "docs": [
+                "Estructura principal del certificado",
+                "Contiene toda la información relevante sobre una certificación"
+            ],
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "u32"
+                },
+                {
+                    "name": "skill",
+                    "type": "Skill"
+                },
+                {
+                    "name": "level",
+                    "type": "Level"
+                },
+                {
+                    "name": "status",
+                    "type": "Status"
+                },
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "issuer_address",
+                    "type": "Address"
+                }
+            ]
+        },
+        "Level": {
+            "type": "enum",
+            "docs": [
+                "Niveles de competencia para cada habilidad",
+                "Representa el grado de dominio del usuario en una habilidad específica"
+            ],
+            "variants": [
+                {
+                    "name": "Basic",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Intermediate",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Advanced",
+                    "discriminant": 2
+                }
+            ]
+        },
+        "Skill": {
+            "type": "enum",
+            "docs": [
+                "Enumeración que define las habilidades disponibles en el sistema",
+                "Se pueden agregar más habilidades según sea necesario"
+            ],
+            "variants": [
+                {
+                    "name": "Skill1",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Skill2",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Skill3",
+                    "discriminant": 2
+                },
+                {
+                    "name": "Skill4",
+                    "discriminant": 3
+                },
+                {
+                    "name": "Skill5",
+                    "discriminant": 4
+                }
+            ]
+        },
+        "Status": {
+            "type": "enum",
+            "docs": [
+                "Estado actual del certificado",
+                "Permite trackear si un certificado está activo o ha sido revocado"
+            ],
+            "variants": [
+                {
+                    "name": "Active",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Revoked",
+                    "discriminant": 1
+                }
+            ]
+        }
+    }
+}

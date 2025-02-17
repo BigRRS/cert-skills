@@ -1,0 +1,1 @@
+/workspaces/smart-contracts-rust-2/cert-skills/target/debug/cert-skills-meta: /workspaces/smart-contracts-rust-2/cert-skills/meta/src/main.rs /workspaces/smart-contracts-rust-2/cert-skills/src/cert_skills.rs

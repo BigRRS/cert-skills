@@ -1,0 +1,1 @@
+/workspaces/smart-contracts-rust-2/cert-skills/target/wasm32-unknown-unknown/release/cert_skills_wasm.wasm: /workspaces/smart-contracts-rust-2/cert-skills/src/cert_skills.rs /workspaces/smart-contracts-rust-2/cert-skills/wasm/src/lib.rs
